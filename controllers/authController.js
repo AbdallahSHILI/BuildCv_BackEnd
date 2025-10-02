@@ -23,6 +23,7 @@ exports.logout = (req, res, next) => {
 
 // Get current user
 exports.getCurrentUser = (req, res) => {
+  console.log("Current user:", req.user);
   if (req.isAuthenticated()) {
     res.json({
       success: true,
