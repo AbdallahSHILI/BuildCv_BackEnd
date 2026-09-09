@@ -2,8 +2,13 @@
 
 // Google OAuth callback
 exports.googleCallback = (req, res) => {
-  // Successful authentication, redirect to dashboard or home
-  res.redirect("/dashboard");
+  // IMPORTANT: this must point at the React app's callback route, not
+  // at this server's own /dashboard endpoint. A bare "/dashboard"
+  // redirect resolves against this Express server's own origin, which
+  // is why users were seeing the raw { message, user } JSON instead of
+  // the actual app — the backend was redirecting to itself.
+  const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
+  res.redirect(`${clientUrl}/auth/callback`);
 };
 
 // Logout
